@@ -17,12 +17,51 @@ namespace OE.ALGA.Paradigmak
         public bool FuggosegTeljesul { get; }
     }
 
+    public interface IBejaro<T>
+    {
+        T Aktualis { get; }
+        void Alaphelyzet();
+        bool Kovetkezo();
+    }
+
+    public interface IBejarhato<T>
+    {
+        IBejaro<T> BejaroLetrehozas();
+    }
+
     public class TaroloMegteltKivetel : Exception
     {
         public TaroloMegteltKivetel(string message = "A tároló megtelt.") : base(message) { }
     }
 
-    public class FeladatTarolo<T> : IEnumerable<T> where T : IVegrehajthato
+    public class FeladatTaroloBejaro<T> : IBejaro<T>
+    {
+        private readonly T[] tarolo;
+        private readonly int n;
+        private int aktualisIndex;
+
+        public T Aktualis => tarolo[aktualisIndex];
+
+        public FeladatTaroloBejaro(T[] tarolo, int n)
+        {
+            this.tarolo = tarolo;
+            this.n = n;
+            Alaphelyzet();
+        }
+
+        public void Alaphelyzet()
+        {
+            aktualisIndex = -1;
+        }
+
+        public virtual bool Kovetkezo()
+        {
+            aktualisIndex++;
+            return aktualisIndex < n;
+        }
+    }
+
+    public class FeladatTarolo<T> : IBejarhato<T>, IEnumerable<T> where T : IVegrehajthato
     {
         protected T[] tarolo;
         protected int n;
@@ -45,10 +84,15 @@ namespace OE.ALGA.Paradigmak
                 tarolo[i].Vegrehajtas();
         }
 
-        public virtual IEnumerator<T> GetEnumerator()
+        public virtual FeladatTaroloBejaro<T> BejaroLetrehozas() => new FeladatTaroloBejaro<T>(tarolo, n);
+
+        IBejaro<T> IBejarhato<T>.BejaroLetrehozas() => BejaroLetrehozas();
+
+        public IEnumerator<T> GetEnumerator()
         {
-            for (int i = 0; i < n; i++)
-                yield return tarolo[i];
+            IBejaro<T> bejaro = BejaroLetrehozas();
+            while (bejaro.Kovetkezo())
+                yield return bejaro.Aktualis;
         }
 
         IEnumerator IEnumerable.GetEnumerator() => GetEnumerator();
