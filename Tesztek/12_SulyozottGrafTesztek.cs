@@ -1,107 +1,107 @@
-﻿//using NUnit.Framework;
-//using OE.ALGA.Adatszerkezetek;
+﻿using NUnit.Framework;
+using OE.ALGA.Adatszerkezetek;
 
-//namespace OE.ALGA.Tesztek.Adatszerkezetek
-//{
-//    [TestFixture(Category = "Adatszerkezetek", TestName = "12 - Csúcs Mátrix Súlyozott Gráf Tesztek")]
-//    public class CsucsMatrixSulyozottGrafTesztek
-//    {
-//        [TestCase]
-//        public void MindenCsucsTeszt()
-//        {
-//            CsucsmatrixSulyozottEgeszGraf csg = new CsucsmatrixSulyozottEgeszGraf(2);
-//            Assert.Multiple(() =>
-//            {
-//                Assert.That(csg.Csucsok.Eleme(0), Is.True);
-//                Assert.That(csg.Csucsok.Eleme(1), Is.True);
-//            });
-//        }
+namespace OE.ALGA.Tesztek.Adatszerkezetek
+{
+    [TestFixture(Category = "Adatszerkezetek", TestName = "12 - Csúcs Mátrix Súlyozott Gráf Tesztek")]
+    public class CsucsMatrixSulyozottGrafTesztek
+    {
+        [TestCase]
+        public void MindenCsucsTeszt()
+        {
+            CsucsmatrixSulyozottEgeszGraf csg = new CsucsmatrixSulyozottEgeszGraf(2);
+            Assert.Multiple(() =>
+            {
+                Assert.That(csg.Csucsok.Eleme(0), Is.True);
+                Assert.That(csg.Csucsok.Eleme(1), Is.True);
+            });
+        }
 
-//        [TestCase]
-//        public void MindenElTeszt()
-//        {
-//            CsucsmatrixSulyozottEgeszGraf csg = new CsucsmatrixSulyozottEgeszGraf(3);
-//            csg.UjEl(0, 1, 1.0f);
-//            csg.UjEl(0, 2, 2.0f);
-//            csg.UjEl(1, 2, 3.0f);
+        [TestCase]
+        public void MindenElTeszt()
+        {
+            CsucsmatrixSulyozottEgeszGraf csg = new CsucsmatrixSulyozottEgeszGraf(3);
+            csg.UjEl(0, 1, 1.0f);
+            csg.UjEl(0, 2, 2.0f);
+            csg.UjEl(1, 2, 3.0f);
 
-//            Assert.Multiple(() =>
-//            {
-//                Assert.That(csg.Elek.Eleme(new SulyozottEgeszGrafEl(0, 0, 0.0f)), Is.False);
-//                Assert.That(csg.Elek.Eleme(new SulyozottEgeszGrafEl(0, 1, 1.0f)), Is.True);
-//                Assert.That(csg.Elek.Eleme(new SulyozottEgeszGrafEl(0, 2, 2.0f)), Is.True);
+            Assert.Multiple(() =>
+            {
+                Assert.That(csg.Elek.Eleme(new SulyozottEgeszGrafEl(0, 0, 0.0f)), Is.False);
+                Assert.That(csg.Elek.Eleme(new SulyozottEgeszGrafEl(0, 1, 1.0f)), Is.True);
+                Assert.That(csg.Elek.Eleme(new SulyozottEgeszGrafEl(0, 2, 2.0f)), Is.True);
 
-//                Assert.That(csg.Elek.Eleme(new SulyozottEgeszGrafEl(1, 0, 0.0f)), Is.False);
-//                Assert.That(csg.Elek.Eleme(new SulyozottEgeszGrafEl(1, 1, 0.0f)), Is.False);
-//                Assert.That(csg.Elek.Eleme(new SulyozottEgeszGrafEl(1, 2, 3.0f)), Is.True);
+                Assert.That(csg.Elek.Eleme(new SulyozottEgeszGrafEl(1, 0, 0.0f)), Is.False);
+                Assert.That(csg.Elek.Eleme(new SulyozottEgeszGrafEl(1, 1, 0.0f)), Is.False);
+                Assert.That(csg.Elek.Eleme(new SulyozottEgeszGrafEl(1, 2, 3.0f)), Is.True);
 
-//                Assert.That(csg.Elek.Eleme(new SulyozottEgeszGrafEl(2, 0, 0.0f)), Is.False);
-//                Assert.That(csg.Elek.Eleme(new SulyozottEgeszGrafEl(2, 1, 0.0f)), Is.False);
-//                Assert.That(csg.Elek.Eleme(new SulyozottEgeszGrafEl(2, 2, 0.0f)), Is.False);
-//            });
-//        }
+                Assert.That(csg.Elek.Eleme(new SulyozottEgeszGrafEl(2, 0, 0.0f)), Is.False);
+                Assert.That(csg.Elek.Eleme(new SulyozottEgeszGrafEl(2, 1, 0.0f)), Is.False);
+                Assert.That(csg.Elek.Eleme(new SulyozottEgeszGrafEl(2, 2, 0.0f)), Is.False);
+            });
+        }
 
-//        [TestCase]
-//        public void VezetElTeszt()
-//        {
-//            CsucsmatrixSulyozottEgeszGraf csg = new CsucsmatrixSulyozottEgeszGraf(2);
-//            Assert.That(csg.VezetEl(0, 1), Is.False);
-//            csg.UjEl(0, 1, 1.0f);
-//            Assert.Multiple(() =>
-//            {
-//                Assert.That(csg.VezetEl(0, 1), Is.True);
-//                Assert.That(csg.VezetEl(1, 0), Is.False);
-//            });
-//        }
+        [TestCase]
+        public void VezetElTeszt()
+        {
+            CsucsmatrixSulyozottEgeszGraf csg = new CsucsmatrixSulyozottEgeszGraf(2);
+            Assert.That(csg.VezetEl(0, 1), Is.False);
+            csg.UjEl(0, 1, 1.0f);
+            Assert.Multiple(() =>
+            {
+                Assert.That(csg.VezetEl(0, 1), Is.True);
+                Assert.That(csg.VezetEl(1, 0), Is.False);
+            });
+        }
 
-//        [TestCase]
-//        public void SzomszedsagTeszt()
-//        {
-//            CsucsmatrixSulyozottEgeszGraf csg = new CsucsmatrixSulyozottEgeszGraf(3);
-//            csg.UjEl(0, 1, 1.0f);
-//            csg.UjEl(0, 2, 1.0f);
-//            csg.UjEl(1, 2, 1.0f);
+        [TestCase]
+        public void SzomszedsagTeszt()
+        {
+            CsucsmatrixSulyozottEgeszGraf csg = new CsucsmatrixSulyozottEgeszGraf(3);
+            csg.UjEl(0, 1, 1.0f);
+            csg.UjEl(0, 2, 1.0f);
+            csg.UjEl(1, 2, 1.0f);
 
-//            Halmaz<int> a_szomszedai = csg.Szomszedai(0);
-//            Halmaz<int> b_szomszedai = csg.Szomszedai(1);
-//            Halmaz<int> c_szomszedai = csg.Szomszedai(2);
+            Halmaz<int> a_szomszedai = csg.Szomszedai(0);
+            Halmaz<int> b_szomszedai = csg.Szomszedai(1);
+            Halmaz<int> c_szomszedai = csg.Szomszedai(2);
 
-//            Assert.Multiple(() =>
-//            {
-//                Assert.That(a_szomszedai.Eleme(0), Is.False);
-//                Assert.That(a_szomszedai.Eleme(1), Is.True);
-//                Assert.That(a_szomszedai.Eleme(2), Is.True);
+            Assert.Multiple(() =>
+            {
+                Assert.That(a_szomszedai.Eleme(0), Is.False);
+                Assert.That(a_szomszedai.Eleme(1), Is.True);
+                Assert.That(a_szomszedai.Eleme(2), Is.True);
 
-//                Assert.That(b_szomszedai.Eleme(0), Is.False);
-//                Assert.That(b_szomszedai.Eleme(1), Is.False);
-//                Assert.That(b_szomszedai.Eleme(2), Is.True);
+                Assert.That(b_szomszedai.Eleme(0), Is.False);
+                Assert.That(b_szomszedai.Eleme(1), Is.False);
+                Assert.That(b_szomszedai.Eleme(2), Is.True);
 
-//                Assert.That(c_szomszedai.Eleme(0), Is.False);
-//                Assert.That(c_szomszedai.Eleme(1), Is.False);
-//                Assert.That(c_szomszedai.Eleme(2), Is.False);
-//            });
-//        }
+                Assert.That(c_szomszedai.Eleme(0), Is.False);
+                Assert.That(c_szomszedai.Eleme(1), Is.False);
+                Assert.That(c_szomszedai.Eleme(2), Is.False);
+            });
+        }
 
-//        [TestCase]
-//        public void NemLetezoElTeszt()
-//        {
-//            CsucsmatrixSulyozottEgeszGraf csg = new CsucsmatrixSulyozottEgeszGraf(3);
-//            csg.UjEl(0, 1, 1.0f);
-//            csg.UjEl(0, 2, 1.0f);
-//            Assert.Throws<NincsElKivetel>(() => csg.Suly(1, 0));
-//        }
+        [TestCase]
+        public void NemLetezoElTeszt()
+        {
+            CsucsmatrixSulyozottEgeszGraf csg = new CsucsmatrixSulyozottEgeszGraf(3);
+            csg.UjEl(0, 1, 1.0f);
+            csg.UjEl(0, 2, 1.0f);
+            Assert.Throws<NincsElKivetel>(() => csg.Suly(1, 0));
+        }
 
-//        [TestCase]
-//        public void ElSulyTeszt()
-//        {
-//            CsucsmatrixSulyozottEgeszGraf csg = new CsucsmatrixSulyozottEgeszGraf(3);
-//            csg.UjEl(0, 1, 2.0f);
-//            csg.UjEl(0, 2, 3.0f);
-//            float szum = 0.0f;
-//            csg.Elek.Bejar(x => szum += csg.Suly(x.Honnan, x.Hova));
-//            Assert.That(szum, Is.EqualTo(5.0f));
-//        }
-//    }
+        [TestCase]
+        public void ElSulyTeszt()
+        {
+            CsucsmatrixSulyozottEgeszGraf csg = new CsucsmatrixSulyozottEgeszGraf(3);
+            csg.UjEl(0, 1, 2.0f);
+            csg.UjEl(0, 2, 3.0f);
+            float szum = 0.0f;
+            csg.Elek.Bejar(x => szum += csg.Suly(x.Honnan, x.Hova));
+            Assert.That(szum, Is.EqualTo(5.0f));
+        }
+    }
 
 //    [TestFixture(Category = "Adatszerkezetek", TestName = "12 - Gráf Min Feszítőfa Tesztek")]
 //    public class GrafMinFeszitofaTesztek
@@ -275,4 +275,4 @@
 //            });
 //        }
 //    }
-//}
+}

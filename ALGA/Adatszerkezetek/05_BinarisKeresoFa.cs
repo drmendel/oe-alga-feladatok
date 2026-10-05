@@ -4,7 +4,7 @@ namespace OE.ALGA.Adatszerkezetek
 {
     // 5. heti labor feladat - Tesztek: 05_BinarisKeresoFaTesztek.cs
 
-    class FaElem<T> where T : IComparable<T>
+    class FaElem<T> where T : IComparable
     {
         public T tart;
         public FaElem<T>? bal;
@@ -18,7 +18,7 @@ namespace OE.ALGA.Adatszerkezetek
         }
     }
 
-    public class FaHalmaz<T> : Halmaz<T> where T : IComparable<T>
+    public class FaHalmaz<T> : Halmaz<T> where T : IComparable
     {
         private FaElem<T>? gyoker;
 
