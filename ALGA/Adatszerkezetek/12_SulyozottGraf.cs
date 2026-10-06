@@ -93,4 +93,102 @@ namespace OE.ALGA.Adatszerkezetek
             return szomszedok;
         }
     }
+
+    public class Utkereses
+    {
+        public static Szotar<V, float> Dijkstra<V, E>(SulyozottGraf<V, E> g, V start) where V : IComparable
+        {
+            Szotar<V, float> K = new HasitoSzotarTulcsordulasiTerulettel<V, float>(g.CsucsokSzama);
+            g.Csucsok.Bejar(x => K.Beir(x, float.PositiveInfinity));
+            K.Beir(start, 0);
+
+            PrioritasosSor<V> S = new KupacPrioritasosSor<V>(g.CsucsokSzama, (x, y) => K.Kiolvas(x) < K.Kiolvas(y));
+            g.Csucsok.Bejar(x => S.Sorba(x));
+
+            while (!S.Ures)
+            {
+                V u = S.Sorbol();
+                g.Szomszedai(u).Bejar(x =>
+                {
+                    float ujHossz = K.Kiolvas(u) + g.Suly(u, x);
+                    if (ujHossz < K.Kiolvas(x))
+                    {
+                        K.Beir(x, ujHossz);
+                        S.Frissit(x);
+                    }
+                });
+            }
+
+            return K;
+        }
+    }
+
+    public class FeszitofaKereses
+    {
+        public static Szotar<V, V> Prim<V, E>(SulyozottGraf<V, E> g, V start) where V : IComparable
+        {
+            Szotar<V, float> K = new HasitoSzotarTulcsordulasiTerulettel<V, float>(g.CsucsokSzama);
+            Szotar<V, V> Sz = new HasitoSzotarTulcsordulasiTerulettel<V, V>(g.CsucsokSzama);
+            g.Csucsok.Bejar(x => K.Beir(x, float.PositiveInfinity));
+            K.Beir(start, 0);
+
+            PrioritasosSor<V> S = new KupacPrioritasosSor<V>(g.CsucsokSzama, (x, y) => K.Kiolvas(x) < K.Kiolvas(y));
+            Halmaz<V> sorban = new FaHalmaz<V>();
+            g.Csucsok.Bejar(x =>
+            {
+                S.Sorba(x);
+                sorban.Beszur(x);
+            });
+
+            while (!S.Ures)
+            {
+                V u = S.Sorbol();
+                sorban.Torol(u);
+                g.Szomszedai(u).Bejar(x =>
+                {
+                    if (sorban.Eleme(x) && g.Suly(u, x) < K.Kiolvas(x))
+                    {
+                        Sz.Beir(x, u);
+                        K.Beir(x, g.Suly(u, x));
+                        S.Frissit(x);
+                    }
+                });
+            }
+
+            return Sz;
+        }
+
+        public static Halmaz<E> Kruskal<V, E>(SulyozottGraf<V, E> g, V start = default!) where V : IComparable where E : SulyozottGrafEl<V>, IComparable
+        {
+            Halmaz<E> F = new FaHalmaz<E>();
+            Szotar<V, int> komponens = new HasitoSzotarTulcsordulasiTerulettel<V, int>(g.CsucsokSzama);
+            int sorszam = 0;
+            g.Csucsok.Bejar(x =>
+            {
+                komponens.Beir(x, sorszam);
+                sorszam++;
+            });
+
+            PrioritasosSor<E> S = new KupacPrioritasosSor<E>(g.ElekSzama, (x, y) => x.Suly < y.Suly);
+            g.Elek.Bejar(e => S.Sorba(e));
+
+            while (!S.Ures)
+            {
+                E el = S.Sorbol();
+                int honnanKomponens = komponens.Kiolvas(el.Honnan);
+                int hovaKomponens = komponens.Kiolvas(el.Hova);
+                if (honnanKomponens != hovaKomponens)
+                {
+                    F.Beszur(el);
+                    g.Csucsok.Bejar(x =>
+                    {
+                        if (komponens.Kiolvas(x) == hovaKomponens)
+                            komponens.Beir(x, honnanKomponens);
+                    });
+                }
+            }
+
+            return F;
+        }
+    }
 }
